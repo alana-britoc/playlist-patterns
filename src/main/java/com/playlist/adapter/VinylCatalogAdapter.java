@@ -47,9 +47,7 @@ public class VinylCatalogAdapter implements TrackCatalog {
 
     String id = fields[0].trim();
     String rawTitle = fields[1].trim().replaceAll("\\s+", " ");
-    String rawArtist = fields[2].trim();
     String durationField = fields[3].trim();
-    String premiumField = fields[4].trim();
 
     if (id.isEmpty() || rawTitle.isEmpty()) {
       return Optional.empty();
@@ -66,8 +64,10 @@ public class VinylCatalogAdapter implements TrackCatalog {
     }
 
     String title = toTitleCase(rawTitle);
+    String rawArtist = fields[2].trim();
     String artist = parseArtist(rawArtist);
     int durationSeconds = durationMs / 1000;
+    String premiumField = fields[4].trim();
     boolean premium = premiumField.equalsIgnoreCase("Y");
 
     return Optional.of(new Track(id, title, artist, durationSeconds, premium));
